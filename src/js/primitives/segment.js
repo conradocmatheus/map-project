@@ -5,10 +5,10 @@ class Segment {
 	}
 
 	equals(segment) {
-		return this.includesPoint(segment.p1) && this.includesPoint(segment.p2);
+		return this.includes(segment.p1) && this.includes(segment.p2);
 	}
 
-	includesPoint(point) {
+	includes(point) {
 		return this.p1.equals(point) || this.p2.equals(point);
 	}
 
