@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0" />
+		<title>map-project</title>
+		<link
+			rel="stylesheet"
+			href="src/css/styles.css" />
+	</head>
+	<body>
+		<h1>map-project</h1>
+		<canvas id="myCanvas"></canvas>
+
+		<script src="src/js/math/graph.js"></script>
+		<script>
+			myCanvas.width = 1000;
+			myCanvas.height = 800;
+
+			const ctx = myCanvas.getContext("2d");
+
+			const graph = new Graph();
+			graph.draw(ctx);
+		</script>
+	</body>
+</html>
