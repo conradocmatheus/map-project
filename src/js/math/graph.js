@@ -24,6 +24,18 @@ class Graph {
 		this.segments.push(segment);
 	}
 
+	containsSegment(segment) {
+		return this.segments.find((s) => s.equals(segment));
+	}
+
+	tryAddSegment(segment) {
+		if (!this.containsSegment(segment)) {
+			this.addSegment(segment);
+			return true;
+		}
+		return false;
+	}
+
 	draw(ctx) {
 		for (const seg of this.segments) {
 			seg.draw(ctx);
