@@ -8,7 +8,10 @@ class Point {
 		return this.x === point.x && this.y === point.y;
 	}
 
-	draw(ctx, { size = 18, color = "black", outline = false } = {}) {
+	draw(
+		ctx,
+		{ size = 18, color = "black", outline = false, fill = false } = {}
+	) {
 		const radius = size / 2;
 		ctx.beginPath();
 		ctx.fillStyle = color;
@@ -20,6 +23,12 @@ class Point {
 			ctx.strokeStyle = "yellow";
 			ctx.arc(this.x, this.y, radius * 0.6, 0, 2 * Math.PI);
 			ctx.stroke();
+		}
+		if (fill) {
+			ctx.beginPath();
+			ctx.arc(this.x, this.y, radius * 0.4, 0, 2 * Math.PI);
+			ctx.fillStyle = "yellow";
+			ctx.fill();
 		}
 	}
 }
