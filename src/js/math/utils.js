@@ -1,4 +1,4 @@
-function getNearestPoint(loc, points, threshold = MAX_SAFE_INTEGER) {
+function getNearestPoint(loc, points, threshold = Number.MAX_SAFE_INTEGER) {
 	let minDist = Number.MAX_SAFE_INTEGER;
 	let nearest = null;
 	for (const point of points) {
