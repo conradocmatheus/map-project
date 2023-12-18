@@ -1,17 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 	<head>
-		<meta charset="UTF-8" />
-		<meta
-			name="viewport"
-			content="width=device-width, initial-scale=1.0" />
-		<title>map-project</title>
+		<title>World Editor</title>
 		<link
 			rel="stylesheet"
 			href="src/css/styles.css" />
 	</head>
 	<body>
-		<h1>map-project</h1>
+		<h1>World Editor</h1>
 		<canvas id="myCanvas"></canvas>
 		<div id="controls">
 			<button onclick="dispose()">🗑️</button>
@@ -24,6 +20,7 @@
 		<script src="src/js/math/graph.js"></script>
 		<script src="src/js/primitives/point.js"></script>
 		<script src="src/js/primitives/segment.js"></script>
+		<script src="src/js/primitives/polygon.js"></script>
 		<script>
 			myCanvas.width = 600;
 			myCanvas.height = 600;
@@ -41,6 +38,7 @@
 			function animate() {
 				viewport.reset();
 				graphEditor.display();
+				new Polygon(graph.points).draw(ctx);
 				requestAnimationFrame(animate);
 			}
 
