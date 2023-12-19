@@ -1,11 +1,22 @@
 class World {
-	constructor(graph, roadWidth = 100, roadRoundness = 10) {
+	constructor(
+		graph,
+		roadWidth = 100,
+		roadRoundness = 10,
+		buildingWidth = 150,
+		buildingMinLength = 150,
+		spacing = 50
+	) {
 		this.graph = graph;
 		this.roadWidth = roadWidth;
 		this.roadRoundness = roadRoundness;
+		this.buildingWidth = buildingWidth;
+		this.buildingMinLength = buildingMinLength;
+		this.spacing = spacing;
 
 		this.envelopes = [];
 		this.roadBorders = [];
+		this.buildings = [];
 
 		this.generate();
 	}
