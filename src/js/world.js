@@ -35,7 +35,7 @@ class World {
 		this.trees = this.#generateTrees();
 	}
 
-	#generateTrees(count = 10) {
+	#generateTrees() {
 		const points = [
 			...this.roadBorders.map((s) => [s.p1, s.p2]).flat(),
 			...this.buildings.map((b) => b.points).flat(),
@@ -48,7 +48,8 @@ class World {
 		const illegalPolys = [...this.buildings, ...this.envelopes.map((e) => e.poly)];
 
 		const trees = [];
-		while (trees.length < count) {
+		let tryCount = 0;
+		while (tryCount < 100) {
 			const p = new Point(lerp(left, right, Math.random()), lerp(bottom, top, Math.random()));
 			let keep = true;
 			for (const poly of illegalPolys) {
@@ -57,16 +58,31 @@ class World {
 					break;
 				}
 			}
-			if (keep)
-				for (const tree of trees) {
-					if (distance(tree, p) < this.treeSize) {
+
+			if (keep) {
+				let closeToSomething = false;
+				for (const poly of illegalPolys) {
+					if (poly.distanceToPoint(p) < this.treeSize * 2) {
+						closeToSomething = true;
+						break;
+					}
+				}
+			}
+
+			if (keep) {
+				for (const seg of this.roadBorders) {
+					if (seg.distanceToPoint(p) < this.treeSize) {
 						keep = false;
 						break;
 					}
 				}
+			}
+
 			if (keep) {
 				trees.push(p);
+				tryCount = 0;
 			}
+			tryCount++;
 		}
 		return trees;
 	}
