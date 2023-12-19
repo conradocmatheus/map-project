@@ -51,11 +51,21 @@ class World {
 		let tryCount = 0;
 		while (tryCount < 100) {
 			const p = new Point(lerp(left, right, Math.random()), lerp(bottom, top, Math.random()));
+
 			let keep = true;
 			for (const poly of illegalPolys) {
 				if (poly.containsPoint(p) || poly.distanceToPoint(p) < this.treeSize / 2) {
 					keep = false;
 					break;
+				}
+			}
+
+			if (keep) {
+				for (const tree of this.trees) {
+					if (distance(tree, p) < this.treeSize) {
+						keep = false;
+						break;
+					}
 				}
 			}
 
@@ -67,15 +77,7 @@ class World {
 						break;
 					}
 				}
-			}
-
-			if (keep) {
-				for (const seg of this.roadBorders) {
-					if (seg.distanceToPoint(p) < this.treeSize) {
-						keep = false;
-						break;
-					}
-				}
+				keep = closeToSomething;
 			}
 
 			if (keep) {
