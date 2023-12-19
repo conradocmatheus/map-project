@@ -52,6 +52,7 @@ class World {
 		while (tryCount < 100) {
 			const p = new Point(lerp(left, right, Math.random()), lerp(bottom, top, Math.random()));
 
+			// check if tree inside or nearby building / road
 			let keep = true;
 			for (const poly of illegalPolys) {
 				if (poly.containsPoint(p) || poly.distanceToPoint(p) < this.treeSize / 2) {
@@ -60,8 +61,9 @@ class World {
 				}
 			}
 
+			// check if tree too close to other trees
 			if (keep) {
-				for (const tree of this.trees) {
+				for (const tree of trees) {
 					if (distance(tree, p) < this.treeSize) {
 						keep = false;
 						break;
@@ -69,6 +71,7 @@ class World {
 				}
 			}
 
+			// avoiding trees in the middle of nowhere
 			if (keep) {
 				let closeToSomething = false;
 				for (const poly of illegalPolys) {
@@ -135,9 +138,13 @@ class World {
 			bases.push(new Envelope(seg, this.buildingWidth).poly);
 		}
 
-		for (let i = 0; i < bases.length; i++) {
+		const eps = 0.001;
+		for (let i = 0; i < bases.length - 1; i++) {
 			for (let j = i + 1; j < bases.length; j++) {
-				if (bases[i].intersectsPoly(bases[j])) {
+				if (
+					bases[i].intersectsPoly(bases[j]) ||
+					bases[i].distanceToPoly(bases[j]) < this.spacing - eps
+				) {
 					bases.splice(j, 1);
 					j--;
 				}
@@ -157,6 +164,7 @@ class World {
 		for (const seg of this.roadBorders) {
 			seg.draw(ctx, { color: "white", width: 4 });
 		}
+
 		for (const tree of this.trees) {
 			tree.draw(ctx, { size: this.treeSize, color: "rgba(0,0,0,0.5)" });
 		}
