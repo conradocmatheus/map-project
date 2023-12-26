@@ -12,6 +12,17 @@
 		<div id="controls">
 			<button onclick="dispose()">🗑️</button>
 			<button onclick="save()">💾</button>
+			&nbsp;
+			<button
+				id="graphBtn"
+				onclick="setMode('graph')">
+				🌐
+			</button>
+			<button
+				id="stopBtn"
+				onclick="setMode('stop')">
+				🛑
+			</button>
 		</div>
 
 		<script src="src/js/world.js"></script>
@@ -61,6 +72,29 @@
 
 			function save() {
 				localStorage.setItem("graph", JSON.stringify(graph));
+			}
+
+			function setMode(mode) {
+				dissableEditors();
+				switch (mode) {
+					case "graph":
+						graphBtn.style.backgroundColor = "white";
+						graphBtn.style.filter = "";
+						graphEditor.enable();
+						break;
+					case "stop":
+						stopBtn.style.backgroundColor = "white";
+						stopBtn.style.filter = "";
+						break;
+				}
+			}
+
+			function dissableEditors() {
+				graphBtn.style.backgroundColor = "gray";
+				graphBtn.style.filter = "grayscale(100%)";
+				graphEditor.disable();
+				stopBtn.style.backgroundColor = "gray";
+				stopBtn.style.filter = "grayscale(100%)";
 			}
 		</script>
 	</body>
